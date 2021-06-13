@@ -10,6 +10,7 @@ import re
 import subprocess
 import sys
 import vnujar
+import errno
 
 LOGGER = logging.getLogger(__name__)
 
@@ -151,7 +152,7 @@ class Validator(object):
             )
             stdout, stderr = p.communicate()
         except OSError as e:
-            if e.errno == os.errno.ENOENT:
+            if e.errno == errno.ENOENT:
                 raise JavaNotFoundException()
             else:
                 raise
