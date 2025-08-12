@@ -1,0 +1,60 @@
+[project]
+name = "html5validator-2"
+description = "Validate HTML5 files."
+readme = "README.rst"
+authors = [
+    {name = "Cyb3rJak3", email = "git@cyberjake.xyz"},
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = [
+    "PyYAML",
+]
+license = "MIT"
+requires-python = ">=3.8"
+dynamic = ["version"]
+[project.urls]
+Homepage = "https://github.com/Cyb3r-Jak3/html5validator"
+
+[project.scripts]
+html5validator = "html5validator.cli:main"
+
+[dependency-groups]
+dev = [
+    "hacking>=6.0.1",
+    "pytest>=8.3.5",
+]
+
+# Configure setuptools for flat-layout package discovery and data inclusion
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["html5validator*", "vnujar*"]
+
+[tool.setuptools.package-data]
+"vnujar" = ["vnu.jar", "LICENSE", "README.md", "CHANGELOG.md"]
+
+[build-system]
+requires = ["setuptools>=70", "wheel"]
+build-backend = "setuptools.build_meta"
+
+
+[tool.setuptools.dynamic]
+version = {attr = "html5validator.__version__"}
