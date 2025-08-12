@@ -13,6 +13,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    # Same Java version used by the validator project
+    # https://github.com/validator/validator/blob/main/.github/workflows/build.yml#L39-L42
+    - uses: actions/setup-java@v4
+      with:
+        distribution: 'zulu'
+        java-version: '21'
     - name: Set up Python ${{ matrix.python }}
       uses: actions/setup-python@v5
       with:
