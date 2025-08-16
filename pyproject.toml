@@ -49,7 +49,7 @@ where = ["."]
 include = ["html5validator*", "vnujar*"]
 
 [tool.setuptools.package-data]
-"vnujar" = ["vnu.jar", "LICENSE", "README.md", "CHANGELOG.md"]
+"vnujar" = ["vnu.jar", "LICENSE", "README.md", "CHANGELOG.md", "vnu.jar.sha1", "vnu.jar.sha1.asc"]
 
 [build-system]
 requires = ["setuptools>=70", "wheel"]
