@@ -118,7 +118,7 @@ vnu.jar help below.
             raise ValueError("vnu.jar is not the correct version. Please open an "
                          "issue at https://github.com/Cyb3r-Jak3/html5validator"
                          " to report this issue.")
-        print("vnu.jar is the correct version.")
+        LOGGER.info("vnu.jar is the correct version.")
         sys.exit(0)
 
 

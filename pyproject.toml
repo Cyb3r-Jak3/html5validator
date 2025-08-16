@@ -29,12 +29,16 @@ license = "MIT"
 requires-python = ">=3.8"
 dynamic = ["version"]
 [project.urls]
-Homepage = "https://github.com/Cyb3r-Jak3/html5validator"
-
+Homepage = "https://github.com/Cyb3r-Jak3/html5validator-2"
+issues = "https://github.com/Cyb3r-Jak3/html5validator/issues"
 [project.scripts]
 html5validator = "html5validator.cli:main"
 
 [dependency-groups]
+build = [
+    "setuptools>=75.3.2",
+    "wheel>=0.45.1",
+]
 dev = [
     "hacking>=6.0.1",
     "pytest>=8.3.5",
@@ -52,7 +56,7 @@ include = ["html5validator*", "vnujar*"]
 "vnujar" = ["vnu.jar", "LICENSE", "README.md", "CHANGELOG.md", "vnu.jar.sha1", "vnu.jar.sha1.asc"]
 
 [build-system]
-requires = ["setuptools>=70", "wheel"]
+requires = ["setuptools>=80", "wheel"]
 build-backend = "setuptools.build_meta"
 
 
