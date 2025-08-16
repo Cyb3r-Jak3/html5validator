@@ -9,17 +9,17 @@ HTML5 Validator
     (e.g. with `localcrawl <https://github.com/svenkreiss/localcrawl>`_)
     and then validated.
 
-.. image:: https://github.com/svenkreiss/html5validator/actions/workflows/tests.yml/badge.svg?branch=main
-    :target: https://github.com/svenkreiss/html5validator/actions/workflows/tests.yml
-.. image:: https://badge.fury.io/py/html5validator.svg
-    :target: https://pypi.python.org/pypi/html5validator/
+.. image:: https://github.com/Cyb3r-Jak3/html5validator/actions/workflows/tests.yml/badge.svg?branch=main
+    :target: https://github.com/Cyb3r-Jak3/html5validator/actions/workflows/tests.yml
+.. image:: https://badge.fury.io/py/html5validator-2.svg
+    :target: https://pypi.python.org/pypi/html5validator-2/
 
 
 Install
 -------
 
-This module requires Python 3.6, 3.7, 3.8, 3.9 or 3.10 and Java 8 (``openjdk8`` or ``oraclejdk8``).
-Install with ``pip install html5validator`` and run with
+This module requires Python 3.8, 3.9, 3.10, 3.11, 3.12 and 3.13 and Java 11 (``openjdk8`` or ``oraclejdk8``).
+Install with ``pip install html5validator-2`` and run with
 
 .. code-block:: bash
 
@@ -73,7 +73,7 @@ Run ``html5validator --help`` to see the list of command line options::
 
 This module uses the `validator.nu backend <https://github.com/validator/validator.github.io>`_
 which is written in Java. Therefore, a Java Runtime Environment must be
-available on your system. Since version 0.2, Java 8 is required.
+available on your system. Since version 1.0.0, Java 11 is required.
 
 
 Checking CSS/SVG
@@ -98,10 +98,10 @@ Create a ``circle.yml`` file:
 
     machine:
       java:
-        version: openjdk8
+        version: openjdk11
     dependencies:
       pre:
-        - sudo pip install html5validator
+        - sudo pip install html5validator-2
     test:
       override:
         - html5validator --root _build/
@@ -120,13 +120,13 @@ Simplified example ``circle.yml`` file from
 
     version: 2
     jobs:
-      test-3.6:
+      test-3.12:
         docker:
-          - image: python:3.6-stretch
+          - image: python:3.12-slim
         steps:
           - run:
               name: install Java
-              command: apt-get update && apt-get install -y openjdk-8-jre
+              command: apt-get update && apt-get install -y openjdk-11-jre
           - checkout
           - run:
               name: install
@@ -142,7 +142,7 @@ Simplified example ``circle.yml`` file from
       version: 2
       build_and_test:
         jobs:
-          - test-3.6
+          - test-3.12
 
 
 Integration with TravisCI
@@ -154,18 +154,18 @@ Create a ``.travis.yml`` file. This is an example for a Python project:
 
     language: python
     python:
-     - "2.7"
+     - "3.12"
     addons:
       apt:
         packages:
-          - openjdk-8-jre  # install Java8 as required by vnu.jar
+          - openjdk-11-jre  # install Java8 as required by vnu.jar
 
     branches:
       only:
         - gh-pages
 
     install:
-     - pip install html5validator
+     - pip install html5validator-2
 
     script: html5validator --root _build/
 
@@ -175,20 +175,20 @@ This is an example for Java project:
 
     language: java
     jdk:
-     - oraclejdk8  # vnu.jar requires Java 8
+     - oraclejdk11  # vnu.jar requires Java 11
 
     branches:
       only:
         - gh-pages
 
     install:
-     - pip install --user html5validator
+     - pip install --user html5validator-2
 
     script: html5validator --root _build/
 
 
 Fix the ``html5validator`` version by using
-``pip install --user html5validator==<version number>``.
+``pip install --user html5validator-2==<version number>``.
 
 You can also use this for user pages (repositories of the form ``<username>.github.io``)
 where the html files are in the master branch. You only have to remove:
@@ -199,10 +199,6 @@ where the html files are in the master branch. You only have to remove:
       only:
         - gh-pages
 
-from ``.travis.yml``. I am using this on
-`my own user page <https://github.com/svenkreiss/svenkreiss.github.io/blob/master/.travis.yml>`_.
-
-
 Integration with CodeShip
 -------------------------
 
@@ -210,8 +206,8 @@ Add this lines to the ``Setup Commands``:
 
 .. code-block:: yaml
 
-    jdk_switcher use oraclejdk8
-    pip install html5validator
+    jdk_switcher use oraclejdk11
+    pip install html5validator-2
 
 
 This is an example for Ruby project:
@@ -222,8 +218,8 @@ This is an example for Ruby project:
     bundle install
     bundle update
     export RAILS_ENV=test
-    jdk_switcher use oraclejdk8
-    pip install html5validator
+    jdk_switcher use oraclejdk11
+    pip install html5validator-2
 
 Integration with GitLab CI
 --------------------------------
@@ -268,8 +264,13 @@ Technical Notes
 Changelog
 ---------
 
-Install a particular version, for example ``0.1.14``, with ``pip install html5validator==0.1.14``.
-
+Install a particular version, for example ``0.1.14``, with ``pip install html5validator-2==1.0.0``.
+* `main <https://github.com/Cyb3r-Jak3/html5validator/compare/v1.0.0...main>`_
+* `1.0.0 <https://github.com/svenkreiss/html5validator/compare/main...Cyb3r-Jak3:html5validator:v1.0.0>`_ (2025-08-14)
+   * Publish my fork of html5validator-2 to PyPI
+   * Update vnu.jar to release on 2025-08-14
+   * Update Python version support to 3.11, 3.12 and 3.13
+   * Make the minimum Java version 11
 * `main <https://github.com/svenkreiss/html5validator/compare/v0.4.2...main>`_
 * `0.4.2 <https://github.com/svenkreiss/html5validator/compare/v0.4.0...v0.4.2>`_ (2022-05-29)
     * test with Python 3.10
