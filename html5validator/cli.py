@@ -12,7 +12,7 @@ import sys
 import yaml
 
 from . import __version__ as VERSION
-
+from vnujar import check_sha_hash
 LOGGER = logging.getLogger(__name__)
 
 
@@ -103,10 +103,24 @@ vnu.jar help below.
     parser.add_argument('--log-file', dest="log_file",
                         help=("Name for log file. If no name supplied then no "
                               "log file will be created"))
+    parser.add_argument('--check-hash',
+                        action='store_true',
+                        help=('check if vnu.jar is the correct version '
+                              '(default: False)')
+                        )
 
     parser.add_argument('--version', action='version',
                         version='%(prog)s ' + VERSION)
     args, extra_args = parser.parse_known_args()
+
+    if args.check_hash:
+        if not check_sha_hash():
+            raise ValueError("vnu.jar is not the correct version. Please open an "
+                         "issue at https://github.com/Cyb3r-Jak3/html5validator"
+                         " to report this issue.")
+        print("vnu.jar is the correct version.")
+        sys.exit(0)
+
 
     if args.config is not None:
         args, extra_args = parse_yaml(args.config, args)
