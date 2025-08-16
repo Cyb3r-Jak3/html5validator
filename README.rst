@@ -265,34 +265,43 @@ Changelog
 ---------
 
 Install a particular version, for example ``1.0.0``, with ``pip install html5validator-2==1.0.0``.
+
 * `main <https://github.com/Cyb3r-Jak3/html5validator/compare/v1.1.0...main>`_
-* `1.1.0 <https://github.com/Cyb3r-Jak3/html5validator/compare/v1.0.0...v1.1.0>`_
+* `1.1.0 <https://github.com/Cyb3r-Jak3/html5validator/compare/v1.0.0...v1.1.0>`_ (2025-08-15)
+
     * Add argument to check the sha1 hash of the vnu.jar file
 * `1.0.0 <https://github.com/svenkreiss/html5validator/compare/main...Cyb3r-Jak3:html5validator:v1.0.0>`_ (2025-08-14)
+
     * Publish my fork of html5validator-2 to PyPI
     * Update vnu.jar to release on 2025-08-12
     * Update Python version support to 3.11, 3.12 and 3.13
     * Make the minimum Java version 11
 * `0.4.2 <https://github.com/svenkreiss/html5validator/compare/v0.4.0...v0.4.2>`_ (2022-05-29)
+
     * test with Python 3.10
     * vnu.jar updated to 20.6.30
     * compatibility restored with certain versions of Python (`os.errno` issue)
 * `0.4.0 <https://github.com/svenkreiss/html5validator/compare/v0.3.3...v0.4.0>`_ (2021-05-03)
+
     * update vnu jar to 21.4.9
     * use `--stdout` and `--asciiquotes` by default for vnu.jar
     * make `--format=json` parsable
     * better log file and config file tests
     * move tests to GitHub Actions and setup auto-deploy to PyPI from GitHub releases
 * `0.3.3 <https://github.com/svenkreiss/html5validator/compare/v0.3.2...v0.3.3>`_ (2019-12-07)
+
     * `PR#59 <https://github.com/svenkreiss/html5validator/pull/59>`_
 * `0.3.2 <https://github.com/svenkreiss/html5validator/compare/v0.3.1...v0.3.2>`_ (2019-11-22)
+
     * update vnu jar to 18.11.5
     * better output check `PR#57 <https://github.com/svenkreiss/html5validator/pull/57>`_ by `@Cyb3r-Jak3 <https://github.com/Cyb3r-Jak3>`_
 * `0.3.1 <https://github.com/svenkreiss/html5validator/compare/v0.3.0...v0.3.1>`_ (2018-06-01)
+
     * update vnu jar to 18.3.0
     * pass remaining command line options to ``vnu.jar``
     * allow to match multiple file patterns, e.g. ``--match *.html *.css``
 * `0.3.0 <https://github.com/svenkreiss/html5validator/compare/v0.2.8...v0.3.0>`_ (2018-01-21)
+
     * update vnu jar to 17.11.1
     * support explicit list of files: ``html5validator file1.html file2.html``
     * new command line options: ``--no-langdetect``, ``--format``
@@ -301,20 +310,27 @@ Install a particular version, for example ``1.0.0``, with ``pip install html5val
     * bugfix: check existence of Java
     * bugfix: split Java and vnu.jar command line options
 * `0.2.8 <https://github.com/svenkreiss/html5validator/compare/v0.2.7...v0.2.8>`_ (2017-09-08)
+
     * update vnu jar to 17.9.0
     * suppress a warning from the JDK about picked up environment variables
 * `0.2.7 <https://github.com/svenkreiss/html5validator/compare/v0.2.5...v0.2.7>`_ (2017-04-09)
+
     * update vnu jar to 17.3.0
     * lint Python code
 * `0.2.5 <https://github.com/svenkreiss/html5validator/compare/v0.2.4...v0.2.5>`_ (2016-07-30)
+
     * clamp CLI return value at 255: `PR26 <https://github.com/svenkreiss/html5validator/pull/26>`_
 * `0.2.4 <https://github.com/svenkreiss/html5validator/compare/v0.2.3...v0.2.4>`_ (2016-07-14)
+
     * a fix for Cygwin thanks to this `PR20 <https://github.com/svenkreiss/html5validator/pull/20>`_
 * `0.2.3 <https://github.com/svenkreiss/html5validator/compare/v0.2.2...v0.2.3>`_ (2016-07-05)
+
     * ``vnu.jar`` updated to 16.6.29 thanks to this `PR <https://github.com/svenkreiss/html5validator/pull/19>`_
 * `0.2.2 <https://github.com/svenkreiss/html5validator/compare/v0.2.1...v0.2.2>`_ (2016-04-30)
+
     * ``vnu.jar`` updated to 16.3.3
 * `0.2.1 <https://github.com/svenkreiss/html5validator/compare/v0.1.14...v0.2.1>`_ (2016-01-25)
+
     * ``--ignore``, ``--ignore-re``: ignore messages containing an exact pattern or
       matching a regular expression (migration from version 0.1.14: replace ``--ignore`` with ``--ignore-re``)
     * curly quotes and straight quotes can now be used interchangeably
