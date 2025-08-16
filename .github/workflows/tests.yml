@@ -10,6 +10,7 @@ jobs:
       matrix:
         python: ['3.9', '3.10', '3.11', '3.12', '3.13']
         os: [ubuntu-latest, macos-latest, windows-latest]
+        java: ['11', '17', '21']  # Java version used by the validator project
 
     steps:
     - uses: actions/checkout@v4
@@ -18,7 +19,7 @@ jobs:
     - uses: actions/setup-java@v4
       with:
         distribution: 'zulu'
-        java-version: '21'
+        java-version: ${{ matrix.java }}
     - name: Set up Python ${{ matrix.python }}
       uses: actions/setup-python@v5
       with:
