@@ -268,7 +268,7 @@ Install a particular version, for example ``0.1.14``, with ``pip install html5va
 * `main <https://github.com/Cyb3r-Jak3/html5validator/compare/v1.0.0...main>`_
 * `1.0.0 <https://github.com/svenkreiss/html5validator/compare/main...Cyb3r-Jak3:html5validator:v1.0.0>`_ (2025-08-14)
    * Publish my fork of html5validator-2 to PyPI
-   * Update vnu.jar to release on 2025-08-14
+   * Update vnu.jar to release on 2025-08-12
    * Update Python version support to 3.11, 3.12 and 3.13
    * Make the minimum Java version 11
 * `main <https://github.com/svenkreiss/html5validator/compare/v0.4.2...main>`_
