@@ -264,8 +264,9 @@ Technical Notes
 Changelog
 ---------
 
-Install a particular version, for example ``0.1.14``, with ``pip install html5validator-2==1.0.0``.
+Install a particular version, for example ``1.0.0``, with ``pip install html5validator-2==1.0.0``.
 * `main <https://github.com/Cyb3r-Jak3/html5validator/compare/v1.0.0...main>`_
+   * Add argument to check the sha1 hash of the vnu.jar file
 * `1.0.0 <https://github.com/svenkreiss/html5validator/compare/main...Cyb3r-Jak3:html5validator:v1.0.0>`_ (2025-08-14)
    * Publish my fork of html5validator-2 to PyPI
    * Update vnu.jar to release on 2025-08-12
