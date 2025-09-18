@@ -196,10 +196,10 @@ def test_nofiles():
 def test_match():
     """Command line test for matching file pattern"""
 
-    # assert subprocess.call(['html5validator',
-    #                         f'--root={HTML_TEST_FILES}/invalid/',
-    #                         '--match', '*.html',
-    #                         ]) == 1
+    assert subprocess.call(['html5validator',
+                            f'--root={HTML_TEST_FILES}/invalid/',
+                            '--match', '*.html',
+                            ]) == 1
     assert subprocess.call(['html5validator',
                             f'--root={HTML_TEST_FILES}/invalid/',
                             '--match', '*.css',
