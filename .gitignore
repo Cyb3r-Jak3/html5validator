@@ -207,3 +207,5 @@ fabric.properties
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
 
+# https://github.com/microsoft/copilot-intellij-feedback/issues/712
+.idea/copilot*
