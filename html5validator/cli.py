@@ -83,7 +83,7 @@ vnu.jar help below.
                                         if isinstance(s, bytes) else s),
                         dest='ignore_re',
                         help='regular expression of messages to ignore')
-    parser.add_argument("--config", help="Path to a config file for options")
+    parser.add_argument("--config", help="Path to a config file for options. Takes precedence over command line options")
     parser.add_argument('-l', action='store_const', const=2048,
                         dest='stack_size',
                         help=('run on larger files: sets Java '
@@ -142,6 +142,9 @@ vnu.jar help below.
             args.match = ['*.css']
         if '--skip-non-svg' in extra_args:
             args.match = ['*.svg']
+
+    if any(m.endswith('.css') for m in args.match) and ('--also-check-css' not in extra_args and '--css' not in extra_args):
+        extra_args.append('--css')
 
     if args.log_file is None:
         logging.basicConfig(level=getattr(logging, args.log))

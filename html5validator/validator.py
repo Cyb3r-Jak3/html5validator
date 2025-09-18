@@ -37,8 +37,8 @@ class JavaNotFoundException(Exception):
 
 
 def all_files(
-        directory: str = '.',
-        match: str = '*.html',
+        directory: str,
+        match: list[str],
         blacklist: Optional[List[str]] = None,
         skip_invisible: bool = True) -> List:
     if blacklist is None:

@@ -24,7 +24,7 @@ def test_config_skip():
     """Config test for skipping files"""
     assert subprocess.call([
         'html5validator',
-        f'--config={HTML_TEST_FILES}/config_files/skip.yaml']) == 2
+        f'--config={HTML_TEST_FILES}/config_files/skip.yaml']) == 1
 
 
 def test_config_invalid_with_css():
@@ -39,7 +39,7 @@ def test_config_invalid_css_only():
     """Config test for CSSS only"""
     assert subprocess.call([
         'html5validator',
-        f"--config={HTML_TEST_FILES}/config_files/invalid_css_only.yaml"]) == 2
+        f"--config={HTML_TEST_FILES}/config_files/invalid_css_only.yaml"]) == 1
 
 
 def test_config_invalid_single_file():

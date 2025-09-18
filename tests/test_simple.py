@@ -34,6 +34,7 @@ def test_invalid_css_only():
         'html5validator',
         '--root', f'{HTML_TEST_FILES}/invalid/',
         '--skip-non-css',
+        '--log', 'DEBUG'
     ]) == 1
 
 
@@ -192,6 +193,22 @@ def test_nofiles():
         "html5validator", "--root=MISSING"
     ]) == 1
 
+def test_match():
+    """Command line test for matching file pattern"""
+
+    assert subprocess.call(['html5validator',
+                            f'--root={HTML_TEST_FILES}/invalid/',
+                            '--match', '*.html',
+                            ]) == 1
+    assert subprocess.call(['html5validator',
+                            f'--root={HTML_TEST_FILES}/invalid/',
+                            '--match', '*.css',
+                            '--log', 'DEBUG'
+                            ]) == 1
+    assert subprocess.call(['html5validator',
+                            f'--root={HTML_TEST_FILES}/invalid/',
+                            '--match', '*.html', '*.css',
+                            ]) == 3
 
 if __name__ == '__main__':
     test_valid()
@@ -207,3 +224,4 @@ if __name__ == '__main__':
     test_log_file()
     test_skip()
     test_nofiles()
+    test_match()
