@@ -42,6 +42,8 @@ build = [
 dev = [
     "hacking>=6.0.1",
     "pytest>=8.3.5",
+    "setuptools>=75.3.2",
+    "wheel>=0.45.1",
 ]
 
 # Configure setuptools for flat-layout package discovery and data inclusion
