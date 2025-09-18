@@ -37,11 +37,12 @@ jobs:
         python -m pip freeze
         python --version
         python -c "import html5validator; print(html5validator.__version__)"
-#    - name: Lint html5validator
-#      # run: pylint html5validator --disable=fixme
-#      run: flake8
-    # - name: pycodestyle html5validator
-    #   run: python -m pycodestyle html5validator
+
+    - name: Run Lint
+      run: | 
+        uv run ruff check .
+        uv run ruff format --check --diff .
+
     - name: Test
       env:
         PYTHONDEVMODE: 1

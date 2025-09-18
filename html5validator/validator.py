@@ -1,6 +1,5 @@
 """The main validator class."""
 
-
 import errno
 import fnmatch
 import logging
@@ -14,33 +13,35 @@ import vnujar
 LOGGER = logging.getLogger(__name__)
 
 DEFAULT_IGNORE_RE: List[str] = [
-    r'\APicked up _JAVA_OPTIONS:.*',
-    r'\ADocument checking completed. No errors found.*',
+    r"\APicked up _JAVA_OPTIONS:.*",
+    r"\ADocument checking completed. No errors found.*",
 ]
 
-DEFAULT_IGNORE: List[str] = [
-    '{"messages":[]}'
-]
+DEFAULT_IGNORE: List[str] = ['{"messages":[]}']
 
 DEFAULT_IGNORE_XML: List[str] = [
-    '</messages>',
-    '<?xml version=\'1.0\' encoding=\'utf-8\'?>',
-    '<messages xmlns="http://n.validator.nu/messages/">'
+    "</messages>",
+    "<?xml version='1.0' encoding='utf-8'?>",
+    '<messages xmlns="http://n.validator.nu/messages/">',
 ]
 
 
 class JavaNotFoundException(Exception):
     """Error raised is there is no Java found"""
+
     def __str__(self):
-        return ('Missing Java Runtime Environment on this system. '
-                'The command "java" must be available.')
+        return (
+            "Missing Java Runtime Environment on this system. "
+            'The command "java" must be available.'
+        )
 
 
 def all_files(
-        directory: str,
-        match: list[str],
-        blacklist: Optional[List[str]] = None,
-        skip_invisible: bool = True) -> List:
+    directory: str,
+    match: list[str],
+    blacklist: Optional[List[str]] = None,
+    skip_invisible: bool = True,
+) -> List:
     if blacklist is None:
         blacklist = []
     if not isinstance(match, list):
@@ -57,13 +58,13 @@ def all_files(
 
         if skip_invisible:
             # filter out directory names starting with '.'
-            invisible_dirs = [d for d in dirnames if d[0] == '.']
+            invisible_dirs = [d for d in dirnames if d[0] == "."]
             for d in invisible_dirs:
                 dirnames.remove(d)
 
         for pattern in match:
             for filename in fnmatch.filter(filenames, pattern):
-                if skip_invisible and filename[0] == '.':
+                if skip_invisible and filename[0] == ".":
                     # filter out invisible files
                     continue
                 files.append(os.path.join(root, filename))
@@ -72,22 +73,30 @@ def all_files(
 
 
 def _cygwin_path_convert(filepath) -> str:
-    return subprocess.check_output(
-        ['cygpath', '-w', filepath], shell=False).strip().decode('utf8')
+    return (
+        subprocess.check_output(["cygpath", "-w", filepath], shell=False)
+        .strip()
+        .decode("utf8")
+    )
 
 
 def _normalize_string(s) -> str:
-    s = s.replace('“', '"')
-    s = s.replace('”', '"')
+    s = s.replace("“", '"')
+    s = s.replace("”", '"')
     return s
 
 
 class Validator:
-
-    def __init__(self,
-                 ignore=None, ignore_re=None,
-                 errors_only=False, detect_language=True, format=None,
-                 stack_size=None, vnu_args=None):
+    def __init__(
+        self,
+        ignore=None,
+        ignore_re=None,
+        errors_only=False,
+        detect_language=True,
+        format=None,
+        stack_size=None,
+        vnu_args=None,
+    ):
         self.ignore = ignore if ignore else []
         self.ignore_re = ignore_re if ignore_re else []
 
@@ -111,18 +120,17 @@ class Validator:
         self.ignore_re = [_normalize_string(s) for s in self.ignore_re]
 
         # Determine jar location.
-        self.vnu_jar_location = (vnujar.__file__
-                                 .replace('__init__.pyc', 'vnu.jar')
-                                 .replace('__init__.py', 'vnu.jar'))
-        if sys.platform == 'cygwin':
-            self.vnu_jar_location = _cygwin_path_convert(
-                self.vnu_jar_location)
+        self.vnu_jar_location = vnujar.__file__.replace(
+            "__init__.pyc", "vnu.jar"
+        ).replace("__init__.py", "vnu.jar")
+        if sys.platform == "cygwin":
+            self.vnu_jar_location = _cygwin_path_convert(self.vnu_jar_location)
 
     def _java_options(self) -> List[str]:
         java_options = []
 
         if self.stack_size is not None:
-            java_options.append(f'-Xss{self.stack_size}k')
+            java_options.append(f"-Xss{self.stack_size}k")
 
         return java_options
 
@@ -130,11 +138,11 @@ class Validator:
         vnu_options = []
 
         if self.errors_only:
-            vnu_options.append('--errors-only')
+            vnu_options.append("--errors-only")
         if not self.detect_language:
-            vnu_options.append('--no-langdetect')
+            vnu_options.append("--no-langdetect")
         if self.format is not None:
-            vnu_options.append('--format')
+            vnu_options.append("--format")
             vnu_options.append(self.format)
         if self.vnu_args is not None:
             vnu_options += self.vnu_args
@@ -143,28 +151,27 @@ class Validator:
 
     def run_vnu(self, arguments) -> Tuple[str, str]:
         try:
-            cmd = (['java'] + self._java_options()
-                   + ['-jar', self.vnu_jar_location]
-                   + arguments)
-            LOGGER.debug(cmd)
-            p = subprocess.Popen(
-                cmd,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE
+            cmd = (
+                ["java"]
+                + self._java_options()
+                + ["-jar", self.vnu_jar_location]
+                + arguments
             )
+            LOGGER.debug(cmd)
+            p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             stdout, stderr = p.communicate()
         except OSError as e:
             if e.errno == errno.ENOENT:
-                raise JavaNotFoundException()
+                raise JavaNotFoundException() from e
             else:
                 raise
         except subprocess.CalledProcessError as error:
-            raise (error.output.decode('utf-8'))
+            raise (error.output.decode("utf-8")) from error
 
-        return stdout.decode('utf-8'), stderr.decode('utf-8')
+        return stdout.decode("utf-8"), stderr.decode("utf-8")
 
     def validate(self, files):
-        if sys.platform == 'cygwin':
+        if sys.platform == "cygwin":
             files = [_cygwin_path_convert(f) for f in files]
 
         stdout, stderr = self.run_vnu(self._vnu_options() + files)
@@ -194,5 +201,5 @@ class Validator:
             for line in err:
                 print(line)
         else:
-            LOGGER.info('All good.')
+            LOGGER.info("All good.")
         return len(err)

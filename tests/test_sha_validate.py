@@ -2,11 +2,18 @@
 
 import subprocess
 
+
 def test_hash():
     """Test for checking the hash of vnu.jar"""
-    assert subprocess.call([
-        "html5validator", "--check-hash",
-    ]) == 0
+    assert (
+        subprocess.call(
+            [
+                "html5validator",
+                "--check-hash",
+            ]
+        )
+        == 0
+    )
 
 
 def test_sha_hash_mismatch(tmp_path):
@@ -17,6 +24,7 @@ def test_sha_hash_mismatch(tmp_path):
 
     # Patch __file__ to simulate location
     import vnujar
+
     old_file = vnujar.__file__
     vnujar.__file__ = str(tmp_path / "__init__.py")
 
