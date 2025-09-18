@@ -13,13 +13,14 @@ import yaml
 
 from . import __version__ as VERSION
 from vnujar import check_sha_hash
+
 LOGGER = logging.getLogger(__name__)
 
 
 def parse_yaml(filename, starter):
     """Parses yaml config file"""
     converted_namespace = vars(starter)
-    with open(filename, encoding='utf8') as yaml_file:
+    with open(filename, encoding="utf8") as yaml_file:
         yaml_contents = yaml.safe_load(yaml_file)
     LOGGER.debug(yaml_contents)
     for item in yaml_contents.keys():
@@ -32,148 +33,207 @@ def parse_yaml(filename, starter):
 
 def main():
     """Main function of html5validator"""
-    vnu_help, _ = Validator().run_vnu(['--help'])
+    vnu_help, _ = Validator().run_vnu(["--help"])
 
     parser = argparse.ArgumentParser(
-        description='[v' + VERSION + '] ' + __doc__,
-        prog='html5validator',
+        description="[v" + VERSION + "] " + __doc__,
+        prog="html5validator",
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog='''
+        epilog="""
 
 This html5validator uses vnu.jar to check the files.
 It has many options that are documented in the
 vnu.jar help below.
 
 ================= VNU help ========================
-        ''' + vnu_help,
+        """
+        + vnu_help,
     )
-    parser.add_argument('files', nargs='*', default=None,
-                        help='specify files to check')
+    parser.add_argument("files", nargs="*", default=None, help="specify files to check")
 
-    parser.add_argument('--root', default='.',
-                        help='start directory to search for files to validate')
-    parser.add_argument('--match', nargs='+',
-                        help=('match file pattern in search '
-                              '(default: "*.html" or '
-                              '"*.html *.css" if --also-check-css is used)'))
-    parser.add_argument('--blacklist', type=str, nargs='*',
-                        help='directory names to skip in search', default=[])
+    parser.add_argument(
+        "--root", default=".", help="start directory to search for files to validate"
+    )
+    parser.add_argument(
+        "--match",
+        nargs="+",
+        help=(
+            "match file pattern in search "
+            '(default: "*.html" or '
+            '"*.html *.css" if --also-check-css is used)'
+        ),
+    )
+    parser.add_argument(
+        "--blacklist",
+        type=str,
+        nargs="*",
+        help="directory names to skip in search",
+        default=[],
+    )
 
-    parser.add_argument('--show-warnings', dest='errors_only',
-                        action='store_false', default=True,
-                        help='show warnings and count them as errors')
-    parser.add_argument('--no-langdetect', dest='detect_language',
-                        action='store_false', default=True,
-                        help='disable language detection')
-    parser.add_argument('--no-vnu-stdout', dest='vnu_stdout',
-                        action='store_false', default=True,
-                        help='do not use --stdout with vnu.jar')
-    parser.add_argument('--no-asciiquotes', dest='vnu_asciiquotes',
-                        action='store_false', default=True,
-                        help='do not use --asciiquotes with vnu.jar')
-    parser.add_argument('--format', choices=['gnu', 'xml', 'json', 'text'],
-                        help='output format', default=None)
+    parser.add_argument(
+        "--show-warnings",
+        dest="errors_only",
+        action="store_false",
+        default=True,
+        help="show warnings and count them as errors",
+    )
+    parser.add_argument(
+        "--no-langdetect",
+        dest="detect_language",
+        action="store_false",
+        default=True,
+        help="disable language detection",
+    )
+    parser.add_argument(
+        "--no-vnu-stdout",
+        dest="vnu_stdout",
+        action="store_false",
+        default=True,
+        help="do not use --stdout with vnu.jar",
+    )
+    parser.add_argument(
+        "--no-asciiquotes",
+        dest="vnu_asciiquotes",
+        action="store_false",
+        default=True,
+        help="do not use --asciiquotes with vnu.jar",
+    )
+    parser.add_argument(
+        "--format",
+        choices=["gnu", "xml", "json", "text"],
+        help="output format",
+        default=None,
+    )
 
-    parser.add_argument('--ignore', nargs='*', default=None,
-                        type=lambda s: (s.decode('utf-8')
-                                        if isinstance(s, bytes) else s),
-                        help='ignore messages containing the given strings')
-    parser.add_argument('--ignore-re', nargs='*', default=None,
-                        type=lambda s: (s.decode('utf-8')
-                                        if isinstance(s, bytes) else s),
-                        dest='ignore_re',
-                        help='regular expression of messages to ignore')
-    parser.add_argument("--config", help="Path to a config file for options. Takes precedence over command line options")
-    parser.add_argument('-l', action='store_const', const=2048,
-                        dest='stack_size',
-                        help=('run on larger files: sets Java '
-                              'stack size to 2048k'))
-    parser.add_argument('-ll', action='store_const', const=8192,
-                        dest='stack_size',
-                        help=('run on larger files: sets Java '
-                              'stack size to 8192k'))
-    parser.add_argument('-lll', action='store_const', const=32768,
-                        dest='stack_size',
-                        help=('run on larger files: sets Java '
-                              'stack size to 32768k'))
+    parser.add_argument(
+        "--ignore",
+        nargs="*",
+        default=None,
+        type=lambda s: (s.decode("utf-8") if isinstance(s, bytes) else s),
+        help="ignore messages containing the given strings",
+    )
+    parser.add_argument(
+        "--ignore-re",
+        nargs="*",
+        default=None,
+        type=lambda s: (s.decode("utf-8") if isinstance(s, bytes) else s),
+        dest="ignore_re",
+        help="regular expression of messages to ignore",
+    )
+    parser.add_argument(
+        "--config",
+        help="Path to a config file for options."
+        "Takes precedence over command line options",
+    )
+    parser.add_argument(
+        "-l",
+        action="store_const",
+        const=2048,
+        dest="stack_size",
+        help="run on larger files: sets Java stack size to 2048k",
+    )
+    parser.add_argument(
+        "-ll",
+        action="store_const",
+        const=8192,
+        dest="stack_size",
+        help="run on larger files: sets Java stack size to 8192k",
+    )
+    parser.add_argument(
+        "-lll",
+        action="store_const",
+        const=32768,
+        dest="stack_size",
+        help="run on larger files: sets Java stack size to 32768k",
+    )
 
-    parser.add_argument('--log', default='WARNING',
-                        help=('log level: DEBUG, INFO or WARNING '
-                              '(default: WARNING)'))
-    parser.add_argument('--log-file', dest="log_file",
-                        help=("Name for log file. If no name supplied then no "
-                              "log file will be created"))
-    parser.add_argument('--check-hash',
-                        action='store_true',
-                        help=('check if vnu.jar is the correct version '
-                              '(default: False)')
-                        )
+    parser.add_argument(
+        "--log",
+        default="WARNING",
+        help="log level: DEBUG, INFO or WARNING (default: WARNING)",
+    )
+    parser.add_argument(
+        "--log-file",
+        dest="log_file",
+        help=(
+            "Name for log file. If no name supplied then no log file will be created"
+        ),
+    )
+    parser.add_argument(
+        "--check-hash",
+        action="store_true",
+        help="check if vnu.jar is the correct version (default: False)",
+    )
 
-    parser.add_argument('--version', action='version',
-                        version='%(prog)s ' + VERSION)
+    parser.add_argument("--version", action="version", version="%(prog)s " + VERSION)
     args, extra_args = parser.parse_known_args()
 
     if args.check_hash:
         if not check_sha_hash():
-            raise ValueError("vnu.jar is not the correct version. Please open an "
-                         "issue at https://github.com/Cyb3r-Jak3/html5validator"
-                         " to report this issue.")
+            raise ValueError(
+                "vnu.jar is not the correct version. Please open an "
+                "issue at https://github.com/Cyb3r-Jak3/html5validator"
+                " to report this issue."
+            )
         LOGGER.info("vnu.jar is the correct version.")
         sys.exit(0)
-
 
     if args.config is not None:
         args, extra_args = parse_yaml(args.config, args)
     if args.vnu_stdout:
-        extra_args.append('--stdout')
+        extra_args.append("--stdout")
     if args.vnu_asciiquotes:
-        extra_args.append('--asciiquotes')
+        extra_args.append("--asciiquotes")
     if args.match is None:
-        args.match = ['*.html']
+        args.match = ["*.html"]
 
         # append to match
-        if '--also-check-css' in extra_args or '--css' in extra_args:
-            args.match.append('*.css')
-        if '--also-check-svg' in extra_args or '--svg' in extra_args:
-            args.match.append('*.svg')
+        if "--also-check-css" in extra_args or "--css" in extra_args:
+            args.match.append("*.css")
+        if "--also-check-svg" in extra_args or "--svg" in extra_args:
+            args.match.append("*.svg")
 
         # overwrite match
-        if '--skip-non-css' in extra_args:
-            args.match = ['*.css']
-        if '--skip-non-svg' in extra_args:
-            args.match = ['*.svg']
+        if "--skip-non-css" in extra_args:
+            args.match = ["*.css"]
+        if "--skip-non-svg" in extra_args:
+            args.match = ["*.svg"]
 
-    if any(m.endswith('.css') for m in args.match) and ('--also-check-css' not in extra_args and '--css' not in extra_args):
-        extra_args.append('--css')
+    if any(m.endswith(".css") for m in args.match) and (
+        "--also-check-css" not in extra_args and "--css" not in extra_args
+    ):
+        extra_args.append("--css")
 
     if args.log_file is None:
         logging.basicConfig(level=getattr(logging, args.log))
 
     else:
-        logging.basicConfig(level=getattr(logging, args.log),
-                            handlers=[
-                            logging.FileHandler(f"{args.log_file}.log",
-                                                mode="w")])
+        logging.basicConfig(
+            level=getattr(logging, args.log),
+            handlers=[logging.FileHandler(f"{args.log_file}.log", mode="w")],
+        )
 
-    validator = Validator(ignore=args.ignore,
-                          ignore_re=args.ignore_re,
-                          errors_only=args.errors_only,
-                          detect_language=args.detect_language,
-                          format=args.format,
-                          stack_size=args.stack_size,
-                          vnu_args=extra_args)
+    validator = Validator(
+        ignore=args.ignore,
+        ignore_re=args.ignore_re,
+        errors_only=args.errors_only,
+        detect_language=args.detect_language,
+        format=args.format,
+        stack_size=args.stack_size,
+        vnu_args=extra_args,
+    )
     if args.files:
         files = args.files
     else:
         files = all_files(
-            directory=args.root,
-            match=args.match,
-            blacklist=args.blacklist)
+            directory=args.root, match=args.match, blacklist=args.blacklist
+        )
     if len(files) == 0:
         LOGGER.error("There are no files to check")
         sys.exit(1)
-    LOGGER.info('Files to validate: \n  {0}'.format('\n  '.join(files)))
-    LOGGER.info(f'Number of files: {len(files)}')
+    LOGGER.info("Files to validate: \n  {0}".format("\n  ".join(files)))
+    LOGGER.info(f"Number of files: {len(files)}")
 
     error_count = validator.validate(files)
     sys.exit(min(error_count, 255))
