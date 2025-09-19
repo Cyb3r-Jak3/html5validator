@@ -1,6 +1,10 @@
 name: Tests
 
 on:
+  push:
+    branches:
+      - master
+      - main
   pull_request:
     branches:
       - master
@@ -8,7 +12,9 @@ on:
 
 jobs:
   build:
-
+    permissions:
+      id-token: write  # needed for codecov action
+      contents: read  # to clone the repo
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -54,4 +60,15 @@ jobs:
     - name: Test
       env:
         PYTHONDEVMODE: 1
-      run: uv run pytest -vv
+      run: uv run pytest -vv --cov --cov-branch --cov-report=xml --junitxml=junit.xml -o junit_family=legacy
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v5
+      with:
+        use_oidc: true
+
+    - name: Upload test results to Codecov
+      if: ${{ !cancelled() }}
+      uses: codecov/test-results-action@v1
+      with:
+        use_oidc: true
