@@ -14,6 +14,9 @@ HTML5 Validator
 .. image:: https://badge.fury.io/py/html5validator-2.svg
     :target: https://pypi.python.org/pypi/html5validator-2/
 
+.. image:: https://codecov.io/gh/Cyb3r-Jak3/html5validator/graph/badge.svg?token=F3W7IJQ1IQ
+ :target: https://codecov.io/gh/Cyb3r-Jak3/html5validator
+
 
 Install
 -------
@@ -267,6 +270,10 @@ Changelog
 Install a particular version, for example ``1.0.0``, with ``pip install html5validator-2==1.0.0``.
 
 * `main <https://github.com/Cyb3r-Jak3/html5validator/compare/v1.1.4...main>`_
+
+    * Start using ruff for linting
+    * Report coverage to codecov.io
+    * Improve how the ``--match`` argument is handled
 
 * `1.1.(1,2,3,4) <https://github.com/Cyb3r-Jak3/html5validator/compare/v1.1.0...v1.1.4>`_ (2025-08-15 to 2025-08-16)
 

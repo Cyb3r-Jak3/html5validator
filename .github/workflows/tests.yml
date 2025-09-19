@@ -60,15 +60,17 @@ jobs:
     - name: Test
       env:
         PYTHONDEVMODE: 1
-      run: uv run pytest -vv --cov --cov-branch --cov-report=xml --junitxml=junit.xml -o junit_family=legacy
+      run: uv run pytest -vv --cov=html5validator --cov=vnujar --cov-branch --cov-report=xml --junitxml=junit.xml -o junit_family=legacy
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v5
       with:
         use_oidc: true
+        flags: os-${{ matrix.os }} python-${{ matrix.python }} java${{ matrix.java }}
 
     - name: Upload test results to Codecov
       if: ${{ !cancelled() }}
       uses: codecov/test-results-action@v1
       with:
         use_oidc: true
+        flags: os-${{ matrix.os }} python-${{ matrix.python }} java${{ matrix.java }}
