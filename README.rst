@@ -21,7 +21,7 @@ HTML5 Validator
 Install
 -------
 
-This module requires Python 3.8, 3.9, 3.10, 3.11, 3.12 and 3.13 and Java 11 (``openjdk8`` or ``oraclejdk8``).
+This module requires Python 3.8, 3.9, 3.10, 3.11, 3.12 and 3.13 and Java 11, 17, 21. This project is tested with `zulu <https://www.azul.com/downloads/?package=jdk#zulu>`_.
 Install with ``pip install html5validator-2`` and run with
 
 .. code-block:: bash
@@ -269,7 +269,10 @@ Changelog
 
 Install a particular version, for example ``1.0.0``, with ``pip install html5validator-2==1.0.0``.
 
-* `main <https://github.com/Cyb3r-Jak3/html5validator/compare/v1.1.4...main>`_
+* `main <https://github.com/Cyb3r-Jak3/html5validator/compare/v1.1.5...main>`_
+
+
+* `1.1.5 <https://github.com/Cyb3r-Jak3/html5validator/compare/v1.1.4...v1.1.5>`_ (2025-09-19)
 
     * Start using ruff for linting
     * Report coverage to codecov.io
